@@ -1,0 +1,232 @@
+<div class="container">
+    <div class="row">
+        <h1>
+            <img src="./assets/images/MC-CH.svg" height="53" width="53"
+                alt="Image of a pink square with a house and a calculator">
+            <span>Mortgage Calculator</span>
+        </h1>
+    </div>
+
+    <div class="row">
+        <span><strong>From <a href="#">Financial Consumer Agency of Canada</a></strong></span>
+    </div>
+    <br />
+    <div class="row">
+        This calculator determines your mortgage payment and provides you with a mortgage payment schedule. The
+        calculator also shows how much money and how many years you can save by making prepayments.
+    </div>
+    <br />
+    <div class="row">
+        To help determine whether or not you qualify for a home mortgage based on income and expenses, visit the
+        &nbsp;<a href="#">Mortgage Qualifier Tool</a>
+    </div>
+    <br />
+    <div class="row">
+        <strong>Note:</strong>&nbsp; As of July 9, 2012, the maximum amortization period for mortgages with less than a
+        20
+        percent down payment is &nbsp;<strong> 25 years.</strong>
+    </div>
+</div>
+<br />
+
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-color-white">
+                    Payment Plan
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="mortgagePaymentPlanForm">
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="The amount you expect to borrow from your financial institution. It is calculated as the purchase price of your home, minus the down payment plus any applicable mortgage loan insurance premium you have to pay."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Mortgage Amount:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control" formControlName="mortgageAmount">
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <p *ngIf="mortgagePaymentPlanForm.controls.mortgageAmount.invalid"
+                            style="background-color: rgb(243, 220, 220)">Please enter an amount greater than 0 with a
+                            maximum of 2 decimal places. Enter "." as a decimal separator</p>
+
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top" title="Annual interest rate for this mortgage."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Interest Rate:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+
+                                    <input type="number" class="form-control" formControlName="interestRate">
+                                    <div class="input-group-append">
+                                        <span class="input-group-text"><i class="fas fa-percentage"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p *ngIf="mortgagePaymentPlanForm.controls.interestRate.invalid"
+                            style="background-color: rgb(243, 220, 220)">Please enter a percent greater than 0 and less
+                            than 100 with a maximum of 2 decimal places. Enter "." as a decimal separator.</p>
+
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="The number of years and months over which you will repay this loan. The most common amortization period is 25 years. Not to be confused with the term of your loan, which is the duration of the loan agreement you signed with your financial institution and that has to be renewed regularly. Terms are generally for 1 to 10 years."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Amortization Period:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+
+                                    <select formControlName="amortizationPeriodYears" class="form-control">
+                                        <ng-container *ngFor="let ayear of amortPeriodYearList">
+                                            <option [label]="ayear.label" [value]="ayear.year">{{ayear.year}}</option>
+                                        </ng-container>
+                                    </select>
+                                    &nbsp;&nbsp;&nbsp;
+                                    <select formControlName="amortizationPeriodMonths" class="form-control">
+                                        <ng-container *ngFor="let amonth of amortPeriodMonthList">
+                                            <option [label]="amonth.label">{{amonth.month}}</option>
+                                        </ng-container>
+                                    </select>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="By choosing an accelerated payment frequency, you can reduce your amortization period and save thousands of dollars in interest in the long run. For example, the accelerated bi-weekly payment allows you to pay half of your monthly payment every two weeks. You will therefore make 26 payments a year, the equivalent of one extra monthly payment a year."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Payment Frequency:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+
+                                    <select formControlName="paymentFrequency" class="form-control">
+                                        <ng-container *ngFor="let payfreq of paymentFrequencyList">
+                                            <option [label]="payfreq.label" [value]="payfreq.value">{{payfreq.value}}
+                                            </option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top" title="The number of term years.
+                                    "><i class="fas fa-info-circle"></i> </span>&nbsp;Term:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+
+                                    <select formControlName="term" class="form-control">
+                                        <ng-container *ngFor="let ter of termList">
+                                            <option [label]="ter.label" [value]="ter.year">{{ter.year}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-color-white">
+                    Prepayment Plan
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="mortgagePrepaymentPlanForm">
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="Amount that you will prepay on your mortgage. This amount will be applied to the mortgage principal balance, at a frequency of prepayments that you determine."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Prepayment Amount:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text"><i class="fas fa-dollar-sign"></i></span>
+                                    </div>
+                                    <input type="number" class="form-control" formControlName="prepaymentAmount">
+                                </div>
+                            </div>
+                        </div>
+                        <p *ngIf="mortgagePrepaymentPlanForm.controls.prepaymentAmount.invalid"
+                            style="background-color: rgb(243, 220, 220)"> Please enter an amount greater than or equal
+                            to 0 with a maximum of 2 decimal places. Enter "." as a decimal separator</p>
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="The frequency under which you will make prepayments on your mortgage. The options are one time payment, yearly and the same as regular payment."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Prepayment Frequency:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+
+                                    <select formControlName="prepaymentFrequency" class="form-control">
+                                        <ng-container *ngFor="let prepay of prepaymentFrequencyList">
+                                            <option [label]="prepay.label">{{prepay.value}}</option>
+                                        </ng-container>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row form-group">
+                            <div class="col-6">
+                                <label for="mortgageamt" class="font-weight-bold"><span data-toggle="tooltip"
+                                        data-placement="top"
+                                        title="This is the payment number that your prepayments will begin with. For a one time payment, this is the payment number that the single prepayment will be included in. All prepayments of principal are assumed to be received by your lender in time to be included in the following month's interest calculation."><i
+                                            class="fas fa-info-circle"></i> </span>&nbsp;Start With Payment:</label>
+                            </div>
+                            <div class="col-6">
+
+                                <div class="input-group mb-3">
+
+                                    <input type="number" class="form-control" formControlName="startWithPayment">
+
+                                </div>
+                            </div>
+                        </div>
+                        <p *ngIf="mortgagePrepaymentPlanForm.controls.startWithPayment.invalid"
+                            style="background-color: rgb(243, 220, 220)"> Please enter a valid whole number greater than
+                            0</p>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <button class="btn bg-primary text-color-white" (click)="populateInpForMortgageSummary()">Calculate</button>
+    <app-mortgage-summary [inputForMortgageSummary]="inputForMortgageSummary"></app-mortgage-summary>
+</div>

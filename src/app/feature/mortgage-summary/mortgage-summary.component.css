@@ -1,0 +1,10 @@
+:host ::ng-deep caption {
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+    font-weight: bold;
+    text-align: center;
+    caption-side: top;
+    color: rgb(0, 0, 5) !important;
+    font-size: larger;
+  }
+  
